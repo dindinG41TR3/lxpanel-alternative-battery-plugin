@@ -24,7 +24,7 @@ icon, you need to install the awesome-font.
 On Lubuntu, Ubuntu or Debian with lxpanel installed you have to run this commands:
 ```
 sudo apt install fonts-font-awesome
-sudo cp BatteryStatePlugin.so /usr/lib/x86-64linux-gnu/lxpanel/plugins/
+sudo cp BatteryStatePlugin.so /usr/lib/x86_64-linux-gnu/lxpanel/plugins
 ```
 
 
