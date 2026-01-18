@@ -47,6 +47,8 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 #include <string.h>
 #include "batt_sys.h"
@@ -56,6 +58,8 @@
 #define ICON_HALF			0xf242
 #define ICON_QUARTER		0xf243
 #define ICON_EMPTY			0xf244
+// Manual hex conversion if gcolor2rgb24 is unavailable
+#define gcolor2rgb24(c) (((c)->red >> 8) << 16 | ((c)->green >> 8) << 8 | ((c)->blue >> 8))
 
 const int batteryIcons[]={
 	ICON_EMPTY,			// 0-9%
@@ -292,13 +296,15 @@ GtkWidget *batstat_constructor(LXPanel *panel, config_setting_t *settings)
     BatStat->bShowedWarning=FALSE;
     
     /*Default values*/
-    if(! BatStat->chargingColor)
+    if(! BatStat->chargingColor) {
         BatStat->chargingColor = g_strdup("#28f200");
-	if(! BatStat->dischargingColor)
+	}
+	if(! BatStat->dischargingColor) {
         BatStat->dischargingColor = g_strdup("#ffffff");
-    if(! BatStat->warningText)
+	}
+    if(! BatStat->warningText) {
     	BatStat->warningText = g_strdup("Battery almost empty");
-        
+    }    
     gdk_color_parse(BatStat->chargingColor, &BatStat->ColorCharging);
     gdk_color_parse(BatStat->dischargingColor, &BatStat->ColorDischarging);
 	BatStat->settings = settings;
